@@ -1,0 +1,3 @@
+app: node ./scripts/watch-server.js
+webpack: node ./scripts/webpack-dev-server.js
+styles: node ./scripts/watch-styles.js
