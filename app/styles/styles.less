@@ -1,5 +1,17 @@
-@color: white;
+@import (inline) './normalize.css';
 
-body {
-	background-color: @color;
-}
+@framework-dir: '../../node_modules/lux-less-framework/less';
+
+@import '@{framework-dir}/variables.less';
+
+@content-width: 800px;
+ 
+@import '@{framework-dir}/core.less';
+@import '@{framework-dir}/typography.less';
+@import '@{framework-dir}/buttons.less';
+@import '@{framework-dir}/input.less';
+@import '@{framework-dir}/grid.less';
+@import '@{framework-dir}/layout.less';
+@import '@{framework-dir}/nav.less';
+ 
+html { overflow-y: scroll; }

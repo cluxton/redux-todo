@@ -7,12 +7,11 @@
     "start": "node ./server/app.js",
     "start-dev": "nf start -j ./Procfile.dev -e ./.env-dev",
     "start-prod": "npm run build && cross-env NODE_ENV=production npm run start",
-    
     "build:js": "webpack --config webpack-production-config.js",
-    "build:less": "lessc ./app/styles/styles.less | postcss --use autoprefixer | cssmin > ./server/public/styles.css",
+    "build:lessmin": "lessc ./app/styles/styles.less | postcss --use autoprefixer | cssmin > ./server/public/styles.css",
+    "build:less": "lessc ./app/styles/styles.less | postcss --use autoprefixer > ./server/public/styles.css",
     "build:vendor": "node ./scripts/copy-vendor-files.js",
-    "build": "npm run build:js && npm run build:less",    
-
+    "build": "npm run build:js && npm run build:less && npm run build:vendor",
     "postinstall": "npm run build"
   },
   "author": "",
@@ -25,10 +24,13 @@
     "glob": "^7.0.0",
     "helmet": "^1.1.0",
     "http-proxy": "^1.13.1",
+    "lux-less-framework": "^1.0.1",
     "method-override": "^2.3.5",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
     "redux": "^3.3.1",
+    "redux-thunk": "^1.0.3",
     "webpack": "^1.12.13"
   },
   "devDependencies": {

@@ -1,15 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import configureStore from './redux/configureStore'
+import Root from './containers/Root'
 
-class App extends React.Component {
-	render() {
-		return(
-			<div>
-				<h1>Hello world</h1>
-				<input type="text"></input>
-			</div>
-		);
-	}
-}
+const store = configureStore();
 
-ReactDOM.render(<App/>, document.getElementById("content"));
+ReactDOM.render(<Root store={store} />, document.getElementById("content"))
