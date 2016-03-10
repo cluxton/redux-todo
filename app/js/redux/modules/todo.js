@@ -13,7 +13,7 @@ export const addAsync = (todo) => {
 	return (dispatch) => {
 		setTimeout(()=>{
 			dispatch(addTodo(todo))
-		}, 2000)
+		}, 500)
 	}
 }
 
@@ -31,7 +31,9 @@ const ACTION_HANDLERS = {
 }
 
 //reducer
-const initialState = [ 'Item 1' ]
+const initialState = [
+	{ title: 'Item 1', complete: false }
+]
 
 export default function todoReducer (state = initialState, action) {
 	const handler = ACTION_HANDLERS[action.type]

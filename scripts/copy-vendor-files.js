@@ -2,7 +2,8 @@ var fs = require('fs');
 var path = require('path');
 
 var items = [
-	['node_modules/react/dist/react.min.js', 'server/public/js']
+	['node_modules/react/dist/react.min.js', 'server/public/js'],
+	['node_modules/sw-toolbox/sw-toolbox.js', 'server/public/js']
 ];
 
 console.log('\nCopying vendor files');

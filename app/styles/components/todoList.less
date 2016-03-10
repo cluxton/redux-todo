@@ -1,0 +1,19 @@
+.todo-transition-enter {
+  opacity: 0.01;
+  margin-left: 200px;
+}
+
+.todo-transition-enter.todo-transition-enter-active {
+  opacity: 1;
+  transition: all 300ms ease-in;
+  margin-left: 0px;
+}
+
+.todo-transition-leave {
+  opacity: 1;
+}
+
+.todo-transition-leave.todo-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

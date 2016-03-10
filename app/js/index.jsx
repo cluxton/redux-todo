@@ -10,7 +10,7 @@ ReactDOM.render(<Root store={store} />, document.getElementById("content"))
 //Register the service worker
 if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
 	navigator.serviceWorker
-		.register('sw.min.js', { scope: '/' })
+		.register('worker.js', { scope: '/' })
 		.then(function(registration) {
 			console.log('ServiceWorker registration successful with scope: ',    registration.scope);
 		})

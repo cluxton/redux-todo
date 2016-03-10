@@ -3,8 +3,7 @@ var path = require('path');
 
 function entry(options) {
   var entry = {
-    app: ['./app/js/index.jsx'],
-    "../sw": './app/js/sw.js'
+    app: ['./app/js/index.jsx']
   };
 
   //If devserver is enabled, bundle the webpack client into the app bundle
@@ -17,8 +16,8 @@ function entry(options) {
 
 function externals(options) {
   return {
-    "react" : "React",
-    "react-dom" : "React"
+    //"react" : "React",
+    //"react-dom" : "React"
   };
 }
 
