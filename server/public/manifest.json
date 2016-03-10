@@ -10,7 +10,7 @@
         "src": "img/AppIcon@2x.png",
         "sizes": "128x128"
       }],
-  "start_url": "/swtest.html",
+  "start_url": "/",
   "display": "fullscreen",
   "orientation": "portrait",
   "background_color": "#0d47a1"
