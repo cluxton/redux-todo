@@ -2,13 +2,14 @@ var webpack = require('webpack');
 var path = require('path');
 
 function entry(options) {
-  var entry = [ 
-    './app/js/index.jsx'
-  ];
+  var entry = {
+    app: ['./app/js/index.jsx'],
+    "../sw": './app/js/sw.js'
+  };
 
   //If devserver is enabled, bundle the webpack client into the app bundle
   if (options.devserver === true) {
-    entry.push('webpack-dev-server/client?http://' + options.webpackHost + ':' + options.webpackPort);
+    entry.app.push('webpack-dev-server/client?http://' + options.webpackHost + ':' + options.webpackPort);
   }
 
   return entry;
@@ -39,11 +40,10 @@ module.exports = function(options) {
     devtool : 'source-map',
     
     output : {
-      filename : 'app.min.js',
+      filename : '[name].min.js',
       publicPath :'/assets/',
       sourceMapFilename : '[file].map',
-      path : path.join(__dirname,'./server/public/bundle'),
-      library : '[name]'
+      path : path.join(__dirname,'./server/public/bundle')
     },
 
     module: {

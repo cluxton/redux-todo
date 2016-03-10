@@ -1,0 +1,17 @@
+{
+  "lang": "en",
+  "name": "Todo List",
+  "short_name": "Todo",
+  "icons": [{
+        "src": "img/AppIcon.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      }, {
+        "src": "img/AppIcon@2x.png",
+        "sizes": "128x128"
+      }],
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0d47a1"
+}

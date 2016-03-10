@@ -3,4 +3,8 @@ node_modules
 npm-debug.log
 .vscode
 
-server/public
+#Static resources
+server/public/bundle
+server/public/js
+server/public/styles.css
+server/public/sw.*
