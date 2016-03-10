@@ -24,7 +24,7 @@
     "glob": "^7.0.0",
     "helmet": "^1.1.0",
     "http-proxy": "^1.13.1",
-    "lux-less-framework": "^1.0.1",
+    "lux-less-framework": "^1.1.0",
     "method-override": "^2.3.5",
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
