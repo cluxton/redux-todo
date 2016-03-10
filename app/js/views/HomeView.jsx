@@ -30,17 +30,6 @@ class HomeView extends React.Component {
 				<div className="lx-page">
 					<Header/>
 					<div className="lx-main lx-content lx-pad">
-						<h1>Heading1</h1>
-						<h2>Heading2</h2>
-						<h3>Heading3</h3>
-						<h4>Heading4</h4>
-						<h5>Heading5</h5>
-
-						<div className="lx-row">
-							<div className="lx-col-6 lx-col-12-small">Text</div>
-							<div className="lx-col-6 lx-col-12-small">Text</div>
-						</div>
-						
 						<input type="text" ref="todoName"></input><button onClick={this.addTodo}>Add</button>
 						<div>
 							TODOS:

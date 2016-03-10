@@ -8,7 +8,7 @@ const Header = (props) => {
 	return (
 		<div className="lx-header">
 			<div className="lx-content lx-relative">
-				<span className="lx-title">Redux todo</span>
+				<span className="lx-title">Todo List</span>
 				<div className="lx-nav lx-nav-collapse">
 					<NavLink href="#">Github</NavLink>
 					<NavLink href="#">NPM</NavLink>
