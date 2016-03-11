@@ -4,12 +4,22 @@ import Footer from '../components/Footer'
 import TodoList from '../components/TodoList'
 import TodoField from '../components/TodoField'
 import { connect } from 'react-redux'
-import { addTodo, addAsync } from '../redux/modules/todo'
+import { addTodo, addAsync, markComplete, undoComplete } from '../redux/modules/todo'
 
 class HomeView extends React.Component {
 
 	constructor() {
 		super()
+		this.onClickTodo = this.onClickTodo.bind(this)
+		this.onClickCompleteTodo = this.onClickCompleteTodo.bind(this)
+	}
+
+	onClickTodo(e) {
+		this.props.markComplete(e.currentTarget.dataset.todoId)
+	}
+
+	onClickCompleteTodo(e) {
+		this.props.undoComplete(e.currentTarget.dataset.todoId)
 	}
 
 	render() {
@@ -17,8 +27,27 @@ class HomeView extends React.Component {
 				<div className="lx-page">
 					<Header/>
 					<div className="lx-main lx-content lx-pad">
-						<TodoList todos={this.props.todos}/>
 						<TodoField addTodo={this.props.addAsync}/>
+						<h4>Remaining</h4>
+						
+						{this.props.todos.length < 1 ?
+							<span>{"0 items remaining"}</span>
+						: null}
+						<TodoList 
+							todos={this.props.todos}
+							onClickTodo={this.onClickTodo}
+							itemHint="COMPLETE"/>
+						
+						
+						{ this.props.complete.length > 0 ?
+							<h4>Completed</h4>
+						: null}
+
+						<TodoList 
+							todos={this.props.complete}
+							onClickTodo={this.onClickCompleteTodo}
+							itemHint="UNDO"/>
+						
 					</div>
 					
 					<Footer/>
@@ -29,11 +58,14 @@ class HomeView extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		todos: state.todos
+		todos: state.todos.remaining,
+		complete: state.todos.complete
 	}
 }
 
 export default connect((mapStateToProps), {
 	addTodo: addTodo,
-	addAsync: addAsync
+	addAsync: addAsync,
+	markComplete: markComplete,
+	undoComplete: undoComplete
 })(HomeView)

@@ -26,12 +26,13 @@ class TodoField extends React.Component {
 
 	render() {
 		return (
-			<form onSubmit={this.onSubmit} ref="newTodoForm">
+			<form onSubmit={this.onSubmit} ref="newTodoForm" autoComplete="off">
 				<input 
+					className="todoInput"
 					type="text" 
-					name="todoTitle"
+					placeholder="New item"
+					autoComplete="off"
 					ref="todoName"></input>
-				<input type="submit" value="Add"/>
 			</form>
 		)
 	}
