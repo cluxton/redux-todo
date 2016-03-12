@@ -17,7 +17,7 @@ let TodoList = (props) => {
 			<CSSTransitionGroup 
 				transitionName="todo-transition"
 				transitionEnterTimeout={500}
-				transitionLeaveTimeout={300}>
+				transitionLeaveTimeout={500}>
 				{items}
 			</CSSTransitionGroup>
 		</ul>
