@@ -16,8 +16,8 @@ function entry(options) {
 
 function externals(options) {
   return {
-    //"react" : "React",
-    //"react-dom" : "React"
+    "react" : "React",
+    "react-dom" : "React"
   };
 }
 
