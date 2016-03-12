@@ -3,7 +3,17 @@ import ReactDOM from 'react-dom'
 import configureStore from './redux/configureStore'
 import Root from './containers/Root'
 
-const store = configureStore();
+let initialState = {}
+
+//Restore any saved state from local storage
+if ('localStorage' in window) {
+	let savedState = window.localStorage.getItem("appState")
+	if (savedState !== null) {
+		initialState = JSON.parse(savedState)
+	}
+}
+
+const store = configureStore(initialState);
 
 ReactDOM.render(<Root store={store} />, document.getElementById("content"))
 
