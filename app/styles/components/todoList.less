@@ -102,3 +102,33 @@
   height: 0em;
   transition: all 300ms ease-in;
 }
+
+.todoListFooter {
+	text-align: center;
+	margin-top: 1em;
+}
+
+.clearTodos {
+	background: none;
+	border: none;
+	padding: 0.6em;
+	background-color: grey;
+	color: white;
+	font-weight: 700;
+	font-size: 0.8em;
+	margin-top: 0.5em;
+}
+
+@media(max-width: @small-break-point) {
+	.clearTodos {
+		display: block;
+		width: 100%;
+		padding: 1em 0.6em
+	}
+
+	.todoItem {
+		padding: 1em 0.5em;
+	}
+
+}
+

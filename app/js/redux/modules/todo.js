@@ -7,6 +7,8 @@ import withoutIndex from '../../util/ArrayUtil'
 export const ADD_TODO = 'ADD_TODO'
 export const MARK_AS_COMPLETE = 'MARK_AS_COMPLETE'
 export const UNDO_COMPLETE = 'UNDO_COMPLETE'
+export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
+
 
 
 
@@ -25,6 +27,12 @@ export const undoComplete = (todoId) => ({
 	type: UNDO_COMPLETE,
 	payload: parseInt(todoId)
 })
+
+export const clearCompleted = () => ({
+	type: CLEAR_COMPLETED,
+	payload: null
+})
+
 
 export const addAsync = (todo) => {
 	return (dispatch) => {
@@ -73,6 +81,14 @@ const ACTION_HANDLERS = {
 			counter: state.counter,
 			remaining: state.remaining.concat(incompleteTodo),
 			complete: withoutIndex(state.complete, index)
+		}
+	},
+
+	[CLEAR_COMPLETED]: (state, action) => {
+		return {
+			counter: state.counter,
+			remaining: state.remaining,
+			complete: []
 		}
 	}
 		

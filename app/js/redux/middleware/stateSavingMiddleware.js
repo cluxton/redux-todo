@@ -1,12 +1,12 @@
 import debounce from 'lodash/debounce'
 
-const stateSavingMiddleware = (stateKey) => {
+const stateSavingMiddleware = (stateKey, debounceInterval) => {
 	
 	let saveState = debounce((getState)=> {
 		if ('localStorage' in window) {
 			window.localStorage.setItem(stateKey, JSON.stringify(getState()))
 		}
-	}, 2000)
+	}, debounceInterval, { 'maxWait' : 1000 })
 
 	let middleware = ({dispatch, getState}) => {
 		return next => action => {

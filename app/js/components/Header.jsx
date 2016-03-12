@@ -9,13 +9,9 @@ const Header = (props) => {
 		<div className="lx-header">
 			<div className="lx-content lx-relative">
 				<span className="lx-title">Todo List</span>
-				<div className="lx-nav lx-nav-collapse">
+				<div className="lx-nav">
 					<NavLink href="#">Github</NavLink>
-					<NavLink href="#">NPM</NavLink>
-					<NavLink href="#">License</NavLink>
-					<NavLink href="#">Download</NavLink>
 				</div>
-				<span className="lx-nav-menu lx-hide-gt-small">Menu</span>
 			</div>
 		</div>
 	);

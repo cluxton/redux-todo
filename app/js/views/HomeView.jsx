@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import TodoList from '../components/TodoList'
 import TodoField from '../components/TodoField'
 import { connect } from 'react-redux'
-import { addTodo, addAsync, markComplete, undoComplete } from '../redux/modules/todo'
+import { addTodo, addAsync, markComplete, undoComplete, clearCompleted } from '../redux/modules/todo'
 
 class HomeView extends React.Component {
 
@@ -48,6 +48,12 @@ class HomeView extends React.Component {
 							todos={this.props.complete}
 							onClickTodo={this.onClickCompleteTodo}
 							itemHint="UNDO"/>
+							
+						{ this.props.complete.length > 0 ?
+							<div className="todoListFooter">
+								<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
+							</div>
+						: null}
 						
 					</div>
 					
@@ -68,5 +74,6 @@ export default connect((mapStateToProps), {
 	addTodo: addTodo,
 	addAsync: addAsync,
 	markComplete: markComplete,
-	undoComplete: undoComplete
+	undoComplete: undoComplete,
+	clearCompleted: clearCompleted
 })(HomeView)
