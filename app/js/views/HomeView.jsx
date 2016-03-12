@@ -27,7 +27,7 @@ class HomeView extends React.Component {
 				<div className="lx-page">
 					<Header/>
 					<div className="lx-main lx-content lx-pad">
-						<TodoField addTodo={this.props.addAsync}/>
+						<TodoField addTodo={this.props.addTodo}/>
 						<h4>Remaining</h4>
 						
 						{this.props.todos.length < 1 ?
@@ -48,7 +48,7 @@ class HomeView extends React.Component {
 							todos={this.props.complete}
 							onClickTodo={this.onClickCompleteTodo}
 							itemHint="UNDO"/>
-							
+
 						{ this.props.complete.length > 0 ?
 							<div className="todoListFooter">
 								<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>

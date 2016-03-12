@@ -8,7 +8,7 @@
 	global.addEventListener('install', event => event.waitUntil(global.skipWaiting()));
 	global.addEventListener('activate', event => event.waitUntil(global.clients.claim()));
 	
-	toolbox.options.cache.name="todoapp-v3"
+	toolbox.options.cache.name="todoapp-v4"
 
 	toolbox.precache(['/']);
 

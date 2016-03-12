@@ -3,6 +3,9 @@ var path = require('path');
 
 var items = [
 	['node_modules/react/dist/react.min.js', 'server/public/js'],
+	['node_modules/react/dist/react.js', 'server/public/js'],
+	['node_modules/react-dom/dist/react-dom.min.js', 'server/public/js'],
+	['node_modules/react-dom/dist/react-dom.js', 'server/public/js'],
 	['node_modules/sw-toolbox/sw-toolbox.js', 'server/public/js']
 ];
 
