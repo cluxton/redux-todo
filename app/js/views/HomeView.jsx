@@ -31,12 +31,13 @@ class HomeView extends React.Component {
 						<h4>Remaining</h4>
 						
 						{this.props.todos.length < 1 ?
-							<span>{"0 items remaining"}</span>
+							<div className="todoItem emptyTodo">{"0 items remaining"}</div>
 						: null}
 						<TodoList 
 							todos={this.props.todos}
 							onClickTodo={this.onClickTodo}
-							itemHint="COMPLETE"/>
+							itemHint="COMPLETE"
+							emptyState="0 items remaining"/>
 						
 						
 						{ this.props.complete.length > 0 ?

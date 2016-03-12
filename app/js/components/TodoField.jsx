@@ -9,14 +9,6 @@ class TodoField extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this)
 	}
 
-	componentDidMount() {
-
-	}
-
-	componentWillUnmount() {
-
-	}
-
 	onSubmit(e) {
 		e.preventDefault()
 		this.props.addTodo({ title: this.refs.todoName.value, complete: false})

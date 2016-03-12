@@ -8,9 +8,6 @@ export const ADD_TODO = 'ADD_TODO'
 export const MARK_AS_COMPLETE = 'MARK_AS_COMPLETE'
 export const UNDO_COMPLETE = 'UNDO_COMPLETE'
 
-export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS'
-export const ADD_TODO_ERROR = 'ADD_TODO_ERROR'
-
 
 
 //Action creators
