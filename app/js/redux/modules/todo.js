@@ -96,12 +96,14 @@ const ACTION_HANDLERS = {
 
 //Setup
 const initialState = {
-	counter: 2,
+	counter: 4,
 	remaining: [
-		{ title: 'Item 1', complete: false, id: 0 }
+		{ title: 'Do something', complete: false, id: 0 },
+		{ title: 'Do something else', complete: false, id: 1 }
 	],
 	complete: [
-		{ title: 'Something finished', complete: true, id: 1 }
+		{ title: 'Open todo app', complete: true, id: 2 },
+		{ title: 'Create a todo', complete: true, id: 3 }
 	]
 }
 
