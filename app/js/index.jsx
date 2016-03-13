@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './redux/configureStore'
 import Root from './containers/Root'
+injectTapEventPlugin();
 
 let initialState = {}
 
@@ -18,7 +20,7 @@ const store = configureStore(initialState);
 ReactDOM.render(<Root store={store} />, document.getElementById("content"))
 
 //Register the service worker
-if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
+if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator && false) {
 	navigator.serviceWorker
 		.register('worker.js', { scope: '/' })
 		.then(function(registration) {

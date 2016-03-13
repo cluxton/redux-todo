@@ -3,6 +3,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TodoList from '../components/TodoList'
 import TodoField from '../components/TodoField'
+import RaisedButton from 'material-ui/lib/raised-button';
+
 import { connect } from 'react-redux'
 import { addTodo, addAsync, markComplete, undoComplete, clearCompleted } from '../redux/modules/todo'
 
@@ -52,6 +54,7 @@ class HomeView extends React.Component {
 						{ this.props.complete.length > 0 ?
 							<div className="todoListFooter">
 								<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
+
 							</div>
 						: null}
 						
@@ -62,6 +65,12 @@ class HomeView extends React.Component {
 		);
 	}
 }
+
+
+// <RaisedButton
+// 						            label="Clear completed"
+// 						            primary={true}
+// 						            onTouchTap={this.props.clearCompleted}/>
 
 const mapStateToProps = (state) => {
 	return {
