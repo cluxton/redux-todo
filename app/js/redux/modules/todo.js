@@ -2,6 +2,7 @@ import merge from 'lodash/merge'
 import filter from 'lodash/filter'
 import findIndex from 'lodash/findIndex'
 import withoutIndex from '../../util/ArrayUtil'
+import u from 'updeep'
 
 //Constants
 export const ADD_TODO = 'ADD_TODO'
@@ -53,11 +54,10 @@ const ACTION_HANDLERS = {
 		let todo = action.payload
 		todo.id = state.counter
 
-		return {
+		return u({
 			counter: state.counter + 1,
 			remaining: state.remaining.concat(todo),
-			complete: state.complete
-		}
+		}, state)
 	},
 
 	[MARK_AS_COMPLETE]: (state, action) => {
@@ -65,11 +65,10 @@ const ACTION_HANDLERS = {
 		let index = findIndex(state.remaining, (todo) => todo.id === id)
 		let completeTodo = merge({}, state.remaining[index], { complete: true })
 
-		return {
-			counter: state.counter,
+		return u({
 			remaining: withoutIndex(state.remaining, index),
 			complete: state.complete.concat(completeTodo)
-		}
+		}, state)
 	},
 
 	[UNDO_COMPLETE]: (state, action) => {
@@ -77,19 +76,16 @@ const ACTION_HANDLERS = {
 		let index = findIndex(state.complete, (todo) => todo.id === id)
 		let incompleteTodo = merge({}, state.complete[index], { complete: false })
 
-		return {
-			counter: state.counter,
+		return u({
 			remaining: state.remaining.concat(incompleteTodo),
 			complete: withoutIndex(state.complete, index)
-		}
+		}, state)
 	},
 
 	[CLEAR_COMPLETED]: (state, action) => {
-		return {
-			counter: state.counter,
-			remaining: state.remaining,
+		return u({
 			complete: []
-		}
+		}, state)
 	}
 		
 }
