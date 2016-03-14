@@ -3,20 +3,18 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import TodoList from '../components/TodoList'
 import TodoField from '../components/TodoField'
-import { connect } from 'react-redux'
-import { addTodo, addAsync, markComplete, undoComplete, clearCompleted } from '../redux/modules/todo'
+import Paper from '../components/Paper'
 
-let Paper = (props) => {
-	return (
-		<div className="paper paperOuter">
-			<div className="paper">
-				<div className="paper paperInner">
-					{props.children}
-				</div>
-			</div>
-		</div>
-	);
-}
+import { connect } from 'react-redux'
+import { createUser, getUser } from '../redux/modules/user'
+import { 
+	addTodo,
+	addAsync,
+	markComplete,
+	undoComplete, 
+	clearCompleted 
+} from '../redux/modules/todo'
+
 
 class HomeView extends React.Component {
 
@@ -24,6 +22,10 @@ class HomeView extends React.Component {
 		super()
 		this.onClickTodo = this.onClickTodo.bind(this)
 		this.onClickCompleteTodo = this.onClickCompleteTodo.bind(this)
+	}
+
+	componentDidMount() {
+		this.props.createUser()
 	}
 
 	onClickTodo(e) {
@@ -75,14 +77,17 @@ class HomeView extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		todos: state.todos.remaining,
-		complete: state.todos.complete
+		complete: state.todos.complete,
+		loading: state.user.loading || state.user.saving
 	}
 }
 
 export default connect((mapStateToProps), {
-	addTodo: addTodo,
-	addAsync: addAsync,
-	markComplete: markComplete,
-	undoComplete: undoComplete,
-	clearCompleted: clearCompleted
+	addTodo,
+	addAsync,
+	markComplete,
+	undoComplete,
+	clearCompleted,
+	createUser,
+	getUser
 })(HomeView)

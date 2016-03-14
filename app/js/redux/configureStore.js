@@ -1,9 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import todos from './modules/todo'
+import user from './modules/user'
 import stateSavingMiddleware from './middleware/stateSavingMiddleware'
 
-const reducers = combineReducers({ todos })
+const reducers = combineReducers({ todos, user })
 
 export default function configureStore (initialState = {}) {
 	let middleware = applyMiddleware(
