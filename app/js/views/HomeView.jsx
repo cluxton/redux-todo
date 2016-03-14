@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import TodoList from '../components/TodoList'
 import TodoField from '../components/TodoField'
 import Paper from '../components/Paper'
+import UserDisplay from '../components/UserDisplay'
 
 import { connect } from 'react-redux'
 import { createUser, getUser } from '../redux/modules/user'
@@ -25,7 +26,14 @@ class HomeView extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.createUser()
+
+		if (this.props.user && this.props.user.id !== null) {
+			this.props.getUser(this.props.user.id)
+		} else {
+			console.log(this.props.user)
+			this.props.createUser()
+		}
+		
 	}
 
 	onClickTodo(e) {
@@ -41,6 +49,7 @@ class HomeView extends React.Component {
 				<div className="pageContent">
 					<Header/>
 						<Paper>
+							<UserDisplay user={this.props.user} loading={this.props.loading}/>
 							<div className="paperHeader">
 								<h3>Todo List</h3>
 							</div>
@@ -78,7 +87,8 @@ const mapStateToProps = (state) => {
 	return {
 		todos: state.todos.remaining,
 		complete: state.todos.complete,
-		loading: state.user.loading || state.user.saving
+		loading: state.user.loading || state.user.saving,
+		user: state.user.user
 	}
 }
 

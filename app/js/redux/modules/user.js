@@ -12,7 +12,7 @@ export const createUser = () => {
 		})
 
 		fetch('/api/users', {method: 'POST'})
-			.then(response => response.json)
+			.then(response => response.json())
 			.then(json => {
 				dispatch({
 					type: Actions.CREATE_USER_SUCCESS,
@@ -36,7 +36,7 @@ export const getUser = (userId) => {
 		})
 
 		fetch('/api/users/' + userId)
-			.then(response => response.json)
+			.then(response => response.json())
 			.then(json => {
 				dispatch({
 					type: Actions.GET_USER_SUCCESS,
@@ -104,7 +104,7 @@ const ACTION_HANDLERS = {
 
 //Setup
 const initialState = {
-	user: null,
+	user: { name: "Offline user", id: null },
 	error: null,
 	loading: false,
 	saving: false

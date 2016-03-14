@@ -17,9 +17,11 @@ router.get('/users/:id', function (req, res, next) {
 				res.json({"message" : "User could not be found"});
 				return;
 			} 
-
-			res.status(200)
-			res.json(user);
+			setTimeout(()=>{
+				res.status(200)
+				res.json(user);
+			}, 2000)
+			
 		})
 		.catch(next);
 });
