@@ -1,0 +1,15 @@
+{
+	"ternjs" : {
+		"ecmaVersion" : 6,
+		"exclude" : ["node_modules/**", "scripts/**"],
+		"libs" : ["browser"],
+		"plugins" :{
+			"requirejs": {
+				"baseURL" : "./"
+			},
+			"doc_comment": {
+		      "fullDocs": true
+		    }
+		}
+	}
+}
