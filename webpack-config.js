@@ -3,7 +3,15 @@ var path = require('path');
 
 function entry(options) {
   var entry = {
-    app: ['./app/js/index.jsx']
+    app: ['./app/js/index.jsx'],
+
+    //npm modules to be included in common "vendor" bundle
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'redux-thunk'
+    ]
   };
 
   //If devserver is enabled, bundle the webpack client into the app bundle
@@ -15,9 +23,7 @@ function entry(options) {
 }
 
 function externals(options) {
-  return {
-    "react" : "React"
-  };
+  return { };
 }
 
 function plugins(options) {
@@ -27,7 +33,17 @@ function plugins(options) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
   }
 
+  plugins.push(new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.min.js"))
+
+  if (options.env) {
+    plugins.push(new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"' + options.env + '"'
+    }))
+  }
+  
   plugins.push(new webpack.NoErrorsPlugin());
+
+  return plugins;
 }
 
 module.exports = function(options) {

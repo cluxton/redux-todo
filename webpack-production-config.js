@@ -1,5 +1,6 @@
 module.exports = require('./webpack-config')({
 	minify: true,
-	devserver: false
+	devserver: false,
+	env: 'production'
 });
 
