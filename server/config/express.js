@@ -69,7 +69,7 @@ module.exports = function(app, config) {
     });
   }
   
-  //In productionm, do not return the stack trace
+  //In production, do not return the stack trace
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
       res.render('error', {
