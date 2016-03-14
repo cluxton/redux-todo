@@ -12,14 +12,17 @@ let TodoList = (props) => {
 					actionHint={props.itemHint}/>
 	})
 
+
+// <CSSTransitionGroup 
+// 				transitionName="todo-transition"
+// 				transitionEnterTimeout={500}
+// 				transitionLeaveTimeout={500}>
+				
+// 			</CSSTransitionGroup>
+
 	return (
 		<ul className="todoList">
-			<CSSTransitionGroup 
-				transitionName="todo-transition"
-				transitionEnterTimeout={500}
-				transitionLeaveTimeout={500}>
-				{items}
-			</CSSTransitionGroup>
+			{items}
 		</ul>
 	)	
 }

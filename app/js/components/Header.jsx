@@ -6,13 +6,8 @@ const NavLink = (props) => {
 
 const Header = (props) => {
 	return (
-		<div className="lx-header">
-			<div className="lx-content lx-relative">
-				<span className="lx-title">Todo List</span>
-				<div className="lx-nav">
-					<NavLink href="#">Github</NavLink>
-				</div>
-			</div>
+		<div className="td-header">
+			{/*Header*/}
 		</div>
 	);
 };

@@ -18,7 +18,7 @@ const store = configureStore(initialState);
 ReactDOM.render(<Root store={store} />, document.getElementById("content"))
 
 //Register the service worker
-if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
+if (false && typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
 	navigator.serviceWorker
 		.register('worker.js', { scope: '/' })
 		.then(function(registration) {

@@ -6,6 +6,18 @@ import TodoField from '../components/TodoField'
 import { connect } from 'react-redux'
 import { addTodo, addAsync, markComplete, undoComplete, clearCompleted } from '../redux/modules/todo'
 
+let Paper = (props) => {
+	return (
+		<div className="paper paperOuter">
+			<div className="paper">
+				<div className="paper paperInner">
+					{props.children}
+				</div>
+			</div>
+		</div>
+	);
+}
+
 class HomeView extends React.Component {
 
 	constructor() {
@@ -24,38 +36,35 @@ class HomeView extends React.Component {
 
 	render() {
 		return(
-				<div className="lx-page">
+				<div className="pageContent">
 					<Header/>
-					<div className="lx-main lx-content lx-pad">
-						<TodoField addTodo={this.props.addTodo}/>
-						<h4>Remaining</h4>
-						
-						{this.props.todos.length < 1 ?
-							<div className="todoItem emptyTodo">{"0 items remaining"}</div>
-						: null}
-						<TodoList 
-							todos={this.props.todos}
-							onClickTodo={this.onClickTodo}
-							itemHint="COMPLETE"
-							emptyState="0 items remaining"/>
-						
-						
-						{ this.props.complete.length > 0 ?
-							<h4>Completed</h4>
-						: null}
-
-						<TodoList 
-							todos={this.props.complete}
-							onClickTodo={this.onClickCompleteTodo}
-							itemHint="UNDO"/>
-
-						{ this.props.complete.length > 0 ?
-							<div className="todoListFooter">
-								<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
+						<Paper>
+							<div className="paperHeader">
+								<h3>Todo List</h3>
 							</div>
-						: null}
-						
-					</div>
+							<div className="paperBody">
+								<TodoField addTodo={this.props.addTodo}/>
+
+								<TodoList 
+									todos={this.props.todos}
+									onClickTodo={this.onClickTodo}
+									itemHint="COMPLETE"/>
+								
+								<TodoList 
+									todos={this.props.complete}
+									onClickTodo={this.onClickCompleteTodo}
+									itemHint="UNDO"/>
+
+								<div className="paperMargin"></div>
+							</div>
+							<div className="paperFooter">
+								{ this.props.complete.length > 0 ?
+									<div className="todoListFooter">
+										<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
+									</div>
+								: null}
+							</div>
+						</Paper>
 					
 					<Footer/>
 				</div>

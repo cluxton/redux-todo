@@ -1,23 +1,29 @@
 @import (inline) './normalize.css';
 
-@framework-dir: '../../node_modules/lux-less-framework/less';
+@small-break-point: 700px;
 
-@import '@{framework-dir}/variables.less';
+@paper-margin: 60px;
+@small-paper-margin: 20px;
 
-@content-width: 800px;
- 
-@import '@{framework-dir}/core.less';
-@import '@{framework-dir}/typography.less';
-//@import '@{framework-dir}/buttons.less';
-//@import '@{framework-dir}/input.less';
-@import '@{framework-dir}/grid.less';
-@import '@{framework-dir}/layout.less';
-@import '@{framework-dir}/nav.less';
 
+@import './components/paper.less';
 @import './components/todoList.less';
  
 html { overflow-y: scroll; }
 
 body {
-	background-color: #efefef;
+	background-color: #222;
+	color: white;
+}
+
+.pageContent {
+	width: 700px;
+	margin: 0 auto;
+}
+
+@media(max-width: @small-break-point) {
+	.pageContent {
+		width: auto;
+		padding: 5px;
+	}
 }
