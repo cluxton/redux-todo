@@ -31,7 +31,7 @@ export const createUser = () => {
 export const getUser = (userId) => {
 	return (dispatch, getState) => {
 		dispatch({
-			type: Actions.GET_USER,
+			type: Actions.LOAD_USER,
 			payload: null
 		})
 
@@ -39,13 +39,13 @@ export const getUser = (userId) => {
 			.then(response => response.json())
 			.then(json => {
 				dispatch({
-					type: Actions.GET_USER_SUCCESS,
+					type: Actions.LOAD_USER_SUCCESS,
 					user: json
 				})
 			})
 			.catch(err => {
 				dispatch({
-					type: Actions.GET_USER_ERROR,
+					type: Actions.LOAD_USER_ERROR,
 					error: err
 				})
 			})
@@ -66,9 +66,18 @@ const ACTION_HANDLERS = {
 	},
 
 	[Actions.CREATE_USER_SUCCESS]: (state, action) => {
+		console.log("CREATE SUCCESS", action)
 		return u({
 			saving: false,
-			user: action.user
+			user: u.constant(action.user)
+		}, state)
+	},
+
+	[Actions.LOAD_USER_SUCCESS]: (state, action) => {
+		console.log("LOAD_USER SUCCESS", action)
+		return u({
+			loading: false,
+			user: u.constant(action.user)
 		}, state)
 	},
 
@@ -80,20 +89,14 @@ const ACTION_HANDLERS = {
 		}, state)
 	},
 
-	[Actions.GET_USER]: (state, action) => {
+	[Actions.LOAD_USER]: (state, action) => {
 		return u({
 			loading: true
 		}, state)
 	},
 
-	[Actions.GET_USER_SUCCESS]: (state, action) => {
-		return u({
-			loading: false,
-			user: action.user
-		}, state)
-	},
-
-	[Actions.GET_USER_ERROR]: (state, action) => {
+	[Actions.LOAD_USER_ERROR]: (state, action) => {
+		console.log("ERROR:", action)
 		return u({
 			loading: false,
 			error: action.error,

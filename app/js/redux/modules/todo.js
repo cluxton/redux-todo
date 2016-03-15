@@ -6,27 +6,33 @@ import u from 'updeep'
 //Action creators
 export const addTodo = (todo) => ({
 	type: Actions.ADD_TODO,
-	payload: todo
+	payload: todo,
+	broadcast: true
 })
 
 export const markComplete = (todoId) => ({
 	type: Actions.MARK_AS_COMPLETE,
-	payload: parseInt(todoId)
+	payload: parseInt(todoId),
+	broadcast: true
 })
 
 export const undoComplete = (todoId) => ({
 	type: Actions.UNDO_COMPLETE,
-	payload: parseInt(todoId)
+	payload: parseInt(todoId),
+	broadcast: true
 })
 
 export const clearCompleted = () => ({
 	type: Actions.CLEAR_COMPLETED,
-	payload: null
+	payload: null,
+	broadcast: true
 })
 
 
 export const addAsync = (todo) => {
 	return (dispatch) => {
+		let action = addTodo(todo);
+
 		setTimeout(()=>{
 			dispatch(addTodo(todo))
 		}, 500)
@@ -41,54 +47,50 @@ export const actions = {
 const ACTION_HANDLERS = {
 
 	[Actions.ADD_TODO]: (state, action) => {
-		let todo = u({ id: state.counter }, action.payload)
-
 		return u({
-			counter: state.counter + 1,
-			remaining: state.remaining.concat(todo),
+			todos: state.todos.concat(action.payload),
 		}, state)
 	},
 
 	[Actions.MARK_AS_COMPLETE]: (state, action) => {
 		let id = action.payload
-		let index = findIndex(state.remaining, (todo) => todo.id === id)
-		let completeTodo = u({ complete: true }, state.remaining[index])
+		let isTodo = todo => todo.id == id
 
 		return u({
-			remaining: withoutIndex(state.remaining, index),
-			complete: state.complete.concat(completeTodo)
+			todos: u.map((todo) => u.if(isTodo, {complete: true}, todo)),
 		}, state)
 	},
 
 	[Actions.UNDO_COMPLETE]: (state, action) => {
 		let id = action.payload
-		let index = findIndex(state.complete, (todo) => todo.id === id)
-		let incompleteTodo =  u({ complete: false }, state.complete[index])
-
+		let isTodo = todo => todo.id == id
 		return u({
-			remaining: state.remaining.concat(incompleteTodo),
-			complete: withoutIndex(state.complete, index)
+			todos: u.map((todo) => u.if(isTodo, {complete: false}, todo)),
 		}, state)
 	},
 
 	[Actions.CLEAR_COMPLETED]: (state, action) => {
 		return u({
-			complete: []
+			todos: u.reject(todo=> todo.complete)
 		}, state)
+	},
+
+	[Actions.GET_USER_SUCCESS]: (state, action) => {
+
 	}
 }
 
 //Setup
 const initialState = {
-	counter: 4,
-	remaining: [
+	title: "Offline todo list",
+	id: null,
+	todos: [
 		{ title: 'Do something', complete: false, id: 0 },
-		{ title: 'Do something else', complete: false, id: 1 }
+		{ title: 'Do something else', complete: false, id: 1 },
+		{ title: 'Something to be done', complete: true, id: 2 },
+		{ title: 'Something already done', complete: true, id: 3 }
 	],
-	complete: [
-		{ title: 'Open todo app', complete: true, id: 2 },
-		{ title: 'Create a todo', complete: true, id: 3 }
-	]
+	complete: [ ]
 }
 
 //Reducer

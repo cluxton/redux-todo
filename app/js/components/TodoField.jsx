@@ -24,7 +24,7 @@ class TodoField extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault()
-		this.props.addTodo({ title: this.state.text, complete: false})
+		this.props.addTodo({ title: this.state.text, complete: false, id: Date.now()})
 		this.setState({"text" : ""})
 		return false
 	}

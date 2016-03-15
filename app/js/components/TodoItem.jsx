@@ -9,7 +9,10 @@ const TodoItem = (props) => {
 	})
 
 	return (
-		<li className={itemClasses} onClick={props.onClick} data-todo-id={props.item.id}>
+		<li className={itemClasses} 
+			onClick={props.onClick} 
+			data-todo-id={props.item.id}
+			data-is-complete={props.item.complete}>
 			<span className="todoLabel">{props.item.title}</span>
 			<span className="todoHint">{props.actionHint}</span>
 		</li>

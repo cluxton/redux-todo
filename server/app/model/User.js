@@ -1,6 +1,6 @@
 'use strict';
 
-const redis = require('../../config/redis');
+const redis = require('../../config/redis').client;
 const idEncoder = require('../../config/idEncoder');
 const Promise = require('bluebird');
 
@@ -10,7 +10,6 @@ const userKey = function(id) {
 
 var User = module.exports = function(object) {
 	if (object !== undefined) {
-		console.log(object)
 		this.id = object.id;
 		this.name = object.name;
 	} else {

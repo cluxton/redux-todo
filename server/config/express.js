@@ -7,6 +7,7 @@ var methodOverride = require('method-override');
 var glob = require('glob');
 var exphbs  = require('express-handlebars');
 
+
 module.exports = function(app, config) {
   
   //These variables are used by the handlebar templates to enable dev features
@@ -43,6 +44,9 @@ module.exports = function(app, config) {
 
   //method-override - Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
   app.use(methodOverride());
+
+
+
 
   //setup the controllers
   var controllers = glob.sync(config.root + '/app/controllers/*.js');

@@ -17,11 +17,9 @@ router.get('/users/:id', function (req, res, next) {
 				res.json({"message" : "User could not be found"});
 				return;
 			} 
-			setTimeout(()=>{
-				res.status(200)
-				res.json(user);
-			}, 2000)
-			
+
+			res.status(200)
+			res.json(user);
 		})
 		.catch(next);
 });
@@ -39,16 +37,16 @@ router.post('/users', function(req,res,next) {
 
 router.put('/users:id', function(req,res,next) {
 	User.get(req.params.id)
-  	.then(function(user) {
+	  	.then(function(user) {
 
-  		if (user === null) {
-  			res.status(404)
-  			res.json({"message" : "User could not be found"});
-  			return;
-  		} 
+	  		if (user === null) {
+	  			res.status(404)
+	  			res.json({"message" : "User could not be found"});
+	  			return;
+	  		} 
 
-  		res.status(200)
-  		res.json(user);
-  	})
-  	.catch(next)
+	  		res.status(200)
+	  		res.json(user);
+	  	})
+	  	.catch(next)
 });

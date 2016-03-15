@@ -46,11 +46,14 @@
     "nodemon": "^1.8.1",
     "postcss-cli": "^2.5.1",
     "postcss-loader": "^0.8.1",
+    "qs": "^6.1.0",
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.0",
+    "react-router": "^2.0.1",
     "redis": "^2.5.0-1",
+    "redlock": "^2.0.0",
     "redux": "^3.3.1",
     "redux-thunk": "^1.0.3",
     "style-loader": "^0.13.0",
@@ -58,5 +61,8 @@
     "updeep": "^0.13.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
+  },
+  "devDependencies": {
+    "express-ws": "^1.0.0"
   }
 }

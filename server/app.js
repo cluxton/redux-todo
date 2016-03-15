@@ -11,6 +11,7 @@ if (config.webpack === true) {
 }
 
 require('./config/express')(app, config);
+require('./config/websocket')(app, server);
 
 server.listen(config.port, function() {
   console.log('Express server listening on port ' + config.port);

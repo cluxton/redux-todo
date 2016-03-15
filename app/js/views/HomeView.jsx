@@ -26,66 +26,69 @@ class HomeView extends React.Component {
 	}
 
 	componentDidMount() {
-
 		if (this.props.user && this.props.user.id !== null) {
+			console.log("Get user")
 			this.props.getUser(this.props.user.id)
 		} else {
-			console.log(this.props.user)
+			console.log("Create user")
 			this.props.createUser()
 		}
-		
 	}
 
 	onClickTodo(e) {
-		this.props.markComplete(e.currentTarget.dataset.todoId)
+		let data = e.currentTarget.dataset;
+
+		if (!JSON.parse(data.isComplete)) {
+			this.props.markComplete(data.todoId)
+		} else {
+			this.props.undoComplete(data.todoId)
+		}
 	}
 
 	onClickCompleteTodo(e) {
-		this.props.undoComplete(e.currentTarget.dataset.todoId)
+		
 	}
 
 	render() {
 		return(
-				<div className="pageContent">
-					<Header/>
-						<Paper>
-							<UserDisplay user={this.props.user} loading={this.props.loading}/>
-							<div className="paperHeader">
-								<h3>Todo List</h3>
-							</div>
-							<div className="paperBody">
-								<TodoField addTodo={this.props.addTodo}/>
+			<div className="pageContent">
+				<Header/>
+					<Paper>
+						<UserDisplay user={this.props.user} loading={this.props.loading}/>
+						<div className="paperHeader">
+							<h3>Todo List</h3>
+						</div>
+						<div className="paperBody">
+							<TodoField addTodo={this.props.addTodo}/>
 
-								<TodoList 
-									todos={this.props.todos}
-									onClickTodo={this.onClickTodo}
-									itemHint="COMPLETE"/>
-								
-								<TodoList 
-									todos={this.props.complete}
-									onClickTodo={this.onClickCompleteTodo}
-									itemHint="UNDO"/>
+							<TodoList 
+								todos={this.props.todos}
+								onClickTodo={this.onClickTodo}
+								itemHint="COMPLETE"/>
+							
+							<TodoList 
+								todos={this.props.complete}
+								onClickTodo={this.onClickCompleteTodo}
+								itemHint="UNDO"/>
 
-								<div className="paperMargin"></div>
+							<div className="paperMargin"></div>
+						</div>
+						<div className="paperFooter">
+							<div className="todoListFooter">
+								<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
 							</div>
-							<div className="paperFooter">
-								{ this.props.complete.length > 0 ?
-									<div className="todoListFooter">
-										<button className="clearTodos" onClick={this.props.clearCompleted}>Clear completed</button>
-									</div>
-								: null}
-							</div>
-						</Paper>
-					
-					<Footer/>
-				</div>
+						</div>
+					</Paper>
+				
+				<Footer/>
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		todos: state.todos.remaining,
+		todos: state.todos.todos,
 		complete: state.todos.complete,
 		loading: state.user.loading || state.user.saving,
 		user: state.user.user
