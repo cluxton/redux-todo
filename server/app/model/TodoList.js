@@ -17,7 +17,11 @@ var TodoList = module.exports = function(object) {
 	} else {
 		this.id = null;
 		this.title = "New Todo List";
-		this.todos = [];
+		this.todos = [
+			{ title: "Do something", complete: false, id: "1" },
+			{ title: "Do something else", complete: false, id: "2" },
+			{ title: "Another thing to be done", complete: true, id: "3" }
+		];
 	}
 	
 	return this;
@@ -61,25 +65,8 @@ TodoList.prototype.key = function() {
 	return listKey(this.id);
 }
 
-TodoList.prototype.insertTodo = function(todo) {
-	let todoKey = 'todo:' + todo.id
-	return redis.multi()
-		.set(todoKey, JSON.stringify(todo))
-		.rpush('todoList:' + this.id + ':todos', todoKey)
-		.execAsync()
-}
-
-TodoList.prototype.getTodos = function() {
-	let key = this.key() + ':todos'
-	return redis
-		.sortAsync(key, 'by', 'nosort', 'get', '*');
-
-}
-
 module.exports.get = function(id) {
-
 	let key = listKey(id);
-
 	return new Promise(function(resolve, reject) {
 
 		redis.hgetallAsync(listKey(id))
