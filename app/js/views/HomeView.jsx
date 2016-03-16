@@ -4,6 +4,8 @@ import Footer from '../components/Footer'
 import Paper from '../components/Paper'
 import UserDisplay from '../components/UserDisplay'
 import TodoList from '../components/TodoList'
+import LoadingIndicator from '../components/LoadingIndicator'
+
 import throttle from 'lodash/throttle'
 import { connect } from 'react-redux'
 import { 
@@ -70,7 +72,7 @@ class HomeView extends React.Component {
 								onClickTodo={this.onClickTodo}
 								onClearTodos={this.props.clearCompleted}/>
 						: 
-						<span>Loading</span> }
+						<LoadingIndicator/> }
 						
 
 					</Paper>

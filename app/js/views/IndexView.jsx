@@ -29,9 +29,7 @@ class IndexView extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		const location = this.props.location
-		console.log(nextProps);
 		if (nextProps.todoListId !== null) {
-			console.log("ROUTE")
 		    this.context.router.replace(`/todos/${nextProps.todoListId}`)
 		}
 	}
@@ -41,6 +39,7 @@ class IndexView extends React.Component {
 			<div className="pageContent">
 				<Header/>
 					<Paper>
+
 						<UserDisplay user={this.props.user}/>
 						<LoadingIndicator/>
 					</Paper>
