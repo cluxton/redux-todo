@@ -13,11 +13,13 @@ var TodoList = module.exports = function(object) {
 	if (object !== undefined) {
 		console.log(object)
 		this.id = object.id;
-		this.name = object.name;
+		this.title = object.title;
 	} else {
 		this.id = null;
-		this.name = "Todo List";
+		this.title = "New Todo List";
 	}
+
+	this.todos = [];
 	
 	return this;
 };
@@ -37,7 +39,7 @@ TodoList.prototype.update = function(updates) {
 	this.merge(updates);
 
 	return redis.hmsetAsync(this.key(), [
-		"name", this.name,
+		"title", this.title,
 		"id", this.id
 	]);
 };
@@ -47,8 +49,8 @@ TodoList.prototype.merge = function(updates) {
 		return
 	}
 
-	if (updates.name !== undefined) {
-		this.name = updates.name;
+	if (updates.title !== undefined) {
+		this.title = updates.title;
 	}
 }
 

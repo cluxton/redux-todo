@@ -1,6 +1,7 @@
 var express = require('express'),
   http = require('http'),
-  config = require('./config/config');
+  config = require('./config/config'),
+  log4js = require('log4js');
 
 var app = express();
 var server = http.createServer(app);

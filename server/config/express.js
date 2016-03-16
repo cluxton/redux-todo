@@ -6,6 +6,7 @@ var config = require('./config');
 var methodOverride = require('method-override');
 var glob = require('glob');
 var exphbs  = require('express-handlebars');
+var morgan = require('morgan');
 
 
 module.exports = function(app, config) {
@@ -45,8 +46,8 @@ module.exports = function(app, config) {
   //method-override - Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
   app.use(methodOverride());
 
-
-
+  //logging - use morgan for logging
+  app.use(morgan('combined'))
 
   //setup the controllers
   var controllers = glob.sync(config.root + '/app/controllers/*.js');

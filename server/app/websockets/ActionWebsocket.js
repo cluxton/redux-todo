@@ -1,6 +1,30 @@
 'use strict';
+const SocketRepository = require('../repository/SocketRepository');
+const redisClient = require('../../config/redis').client;
+const channelClient = require('../../config/redis').createRedisClient();
+const shortid = require('shortid');
+const TodoList = require('../model/TodoList');
 
-let activeSockets = { } // listId : [websocket1, websocket2]
+const UPDATE_CHANNEL = 'listUpdates';
+
+channelClient.subscribe(UPDATE_CHANNEL)
+
+channelClient.on('message', function(channel, channelMessage) {
+	let data = JSON.parse(channelMessage);
+	let sockets = SocketRepository.getSocketsExcluding(data.listId, data.socketId);
+
+	sockets.forEach(function(socket) {
+		try {
+			socket.ws.send(JSON.stringify(data.message))
+		} catch(err) {
+
+		}
+	});
+})
+
+channelClient.on('error', function(err) {
+	
+})
 
 module.exports = function(ws, url) {
 
@@ -9,40 +33,34 @@ module.exports = function(ws, url) {
 	}
 
 	if (!url.params.userId || !url.params.listId) {
-		console.log("Not enough info");
+		ws.close();
 		return;
 	}
 
 	let listId = url.params.listId;
 	let userId = url.params.userId;
+	let channel = 'listUpdates:' + listId;
+
+	let socketId = userId + ':' + shortid.generate();
 
 	//Subscribe the socket to updates
-	if (!(listId in activeSockets)) {
-		activeSockets[listId] = [];
-	}
-
-	activeSockets[listId].push({
-		userId: userId,
-		listId: listId,
-		ws: ws
-	});
+	SocketRepository.addSocket(listId, socketId, ws);
 
 	ws.on('message', function(message) {
 		let data = JSON.parse(message);
 
-
 		switch(data.type) {
 			case "dispatch":
-				//We want to forward any actions to all other clients
-				let sockets = activeSockets[listId];
-				sockets.forEach(function(socket) {
-					//ignore the socket that sent the message
-					if (socket.ws == ws) {
-						return;
-					}
 
-					socket.ws.send(message)
-				});
+				data.action.broadcast = false;
+
+				let channelMessage = { 
+					socketId: socketId,
+					listId: listId,
+					message: data 
+				};
+
+				redisClient.publish(UPDATE_CHANNEL, JSON.stringify(channelMessage));
 
 				break;
 			default:
@@ -53,16 +71,22 @@ module.exports = function(ws, url) {
 
 	ws.on('close', function() {
 		//Unsubscribe socket from further updates
-		for(let i = 0; i < activeSockets[listId].length; i++) {
-			if (activeSockets[listId][i].ws === ws) {
-				activeSockets[listId].splice(i, 1);
-				if (activeSockets[listId].length < 1) {
-					delete activeSockets[listId];
-				}
-				break;
-			}
-		}
+		SocketRepository.removeSocket(listId, ws);
 	})
 
+	//On connection, we want to send a snapshot of the current state.
+	TodoList.get(listId)
+		.then(function(todoList) {
+			if (todoList !== null) {
+				ws.send(JSON.stringify({
+					type: "dispatch",
+					action: {
+						type : "TODO_LIST_STATE_RECEIVED",
+						todoList: todoList
+					}
+				}))
+			}
+		})
+		
 	return true;
 };
