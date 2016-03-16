@@ -18,9 +18,10 @@ var TodoList = module.exports = function(object) {
 		this.id = null;
 		this.title = "New Todo List";
 		this.todos = [
-			{ title: "Do something", complete: false, id: "1" },
-			{ title: "Do something else", complete: false, id: "2" },
-			{ title: "Another thing to be done", complete: true, id: "3" }
+			{ title: "Show a list of connected users", complete: false, id: "1" },
+			{ title: "Allow user to change their name", complete: false, id: "2" },
+			{ title: "Write a basic todo list", complete: true, id: "3" },
+			{ title: "Get live collaboration working using Redis", complete: true, id: "4" }
 		];
 	}
 	
