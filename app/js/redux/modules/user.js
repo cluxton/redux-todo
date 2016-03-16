@@ -66,17 +66,17 @@ const ACTION_HANDLERS = {
 	},
 
 	[Actions.CREATE_USER_SUCCESS]: (state, action) => {
-		console.log("CREATE SUCCESS", action)
 		return u({
 			saving: false,
+			authenticated: true,
 			user: u.constant(action.user)
 		}, state)
 	},
 
 	[Actions.LOAD_USER_SUCCESS]: (state, action) => {
-		console.log("LOAD_USER SUCCESS", action)
 		return u({
 			loading: false,
+			authenticated: true,
 			user: u.constant(action.user)
 		}, state)
 	},
@@ -96,11 +96,17 @@ const ACTION_HANDLERS = {
 	},
 
 	[Actions.LOAD_USER_ERROR]: (state, action) => {
-		console.log("ERROR:", action)
 		return u({
 			loading: false,
 			error: action.error,
 			user : { name: "Offline user", id: null }
+		}, state)
+	},
+
+	[Actions.LOAD_SAVED_STATE]: (state, action) => {
+		let savedState = action.state;
+		return u({
+			user: savedState.user.user
 		}, state)
 	}
 }
@@ -108,6 +114,7 @@ const ACTION_HANDLERS = {
 //Setup
 const initialState = {
 	user: { name: "Offline user", id: null },
+	authenticated: false,
 	error: null,
 	loading: false,
 	saving: false

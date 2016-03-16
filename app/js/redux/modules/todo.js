@@ -28,6 +28,80 @@ export const clearCompleted = () => ({
 	broadcast: true
 })
 
+//Action creators
+export const createTodoList = () => {
+	return (dispatch, getState) => {
+		dispatch({
+			type: Actions.CREATE_TODO_LIST,
+			payload: null
+		})
+
+		fetch('/api/todolist', {method: 'POST'})
+			.then(response => response.json())
+			.then(json => {
+				dispatch({
+					type: Actions.TODO_LIST_RECEIVED,
+					todoList: json
+				})
+			})
+			.catch(err => {
+				dispatch({
+					type: Actions.CREATE_TODO_LIST_ERROR,
+					error: err
+				})
+			})
+	}
+}
+
+export const loadTodoList = (id) => {
+	return (dispatch, getState) => {
+		dispatch({
+			type: Actions.LOAD_TODO_LIST,
+			payload: null
+		})
+
+		fetch(`/api/todolist/${id}`)
+		.then(response => response.json())
+		.then(json => {
+			dispatch({
+				type: Actions.TODO_LIST_RECEIVED,
+				todoList: json
+			})
+		})
+		.catch(err => {
+			dispatch({
+				type: Actions.LOAD_TODO_LIST_ERROR,
+				error: err
+			})
+		})
+	}
+}
+
+export const saveTodoList = () => {
+	return (dispatch, getState) => {
+		let todos = getState().todos
+		let updates = JSON.stringify({
+			title: todos.title,
+			todos: todos.todos
+		})
+
+		fetch(`/api/todolist/${todos.id}`, {
+			method: 'PUT',
+			headers: {
+		    	"Content-type": "application/json; charset=UTF-8"
+		    },
+			body: updates
+		})
+		.then(response => response.json())
+		.then(json => {
+			console.log("Save successful")
+		})
+		.catch(err => {
+			console.log("Save failed")
+		})
+	}
+}
+
 
 export const addAsync = (todo) => {
 	return (dispatch) => {
@@ -75,22 +149,55 @@ const ACTION_HANDLERS = {
 		}, state)
 	},
 
-	[Actions.GET_USER_SUCCESS]: (state, action) => {
+	[Actions.CREATE_TODO_LIST]: (state, action) => {
+		return u({
+			loading: true
+		}, state)
+	},
 
-	}
+	[Actions.CREATE_TODO_LIST_ERROR]: (state, action) => {
+		return u({
+			loading: false
+		}, state)
+	},
+
+	[Actions.LOAD_TODO_LIST]: (state, action) => {
+		return u({
+			loading: true
+		}, state)
+	},
+
+	[Actions.LOAD_TODO_LIST_ERROR]: (state, action) => {
+		return u({
+			loading: false
+		}, state)
+	},
+
+
+	[Actions.TODO_LIST_RECEIVED]: (state, action) => {
+		return u({
+			id: action.todoList.id,
+			title: action.todoList.title,
+			todos: u.constant(action.todoList.todos),
+			loading: false
+		}, state)
+	},
+
+	// [Actions.LOAD_SAVED_STATE]: (state, action) => {
+	// 	let savedState = action.state;
+	// 	console.log(savedState)
+	// 	return u({
+	// 		todos: savedState.todos.todos
+	// 	}, state)
+	// }	
 }
 
 //Setup
 const initialState = {
-	title: "Offline todo list",
+	title: "",
 	id: null,
-	todos: [
-		{ title: 'Do something', complete: false, id: 0 },
-		{ title: 'Do something else', complete: false, id: 1 },
-		{ title: 'Something to be done', complete: true, id: 2 },
-		{ title: 'Something already done', complete: true, id: 3 }
-	],
-	complete: [ ]
+	loading: true,
+	todos: [ ]
 }
 
 //Reducer

@@ -46,7 +46,6 @@ class ActionWebsocket {
 				type: "CONNECTION_STATUS_CHANGED",
 				status: this.ws.readyState
 			})
-			console.log(this.ws.readyState)
 		}
 
 		this.previousReadyState = this.ws.readyState
@@ -55,6 +54,7 @@ class ActionWebsocket {
 	_onMessage(message) {
 		let data = JSON.parse(message.data)
 		if (data.type === 'dispatch') {
+			console.log("REMOTE ACTION: ", data.action);
 			data.action.broadcast = false;
 			this.store.dispatch(data.action)
 		}
@@ -62,6 +62,6 @@ class ActionWebsocket {
 
 }
 
-let instance = new ActionWebsocket();
+const instance = new ActionWebsocket();
 
 export default instance;

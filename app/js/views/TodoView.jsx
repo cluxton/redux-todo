@@ -1,9 +1,10 @@
 import React from 'react'
 import TodoItems from '../components/TodoItems'
 import TodoField from '../components/TodoField'
+import UserDisplay from '../components/UserDisplay'
 import ActionWebsocket from '../util/ActionWebsocket'
 
-class TodoList extends React.Component {
+class TodoView extends React.Component {
 	
 	constructor() {
 		super()
@@ -46,10 +47,10 @@ class TodoList extends React.Component {
 		
 }
 
-TodoList.propTypes = {
+TodoView.propTypes = {
 	todos: React.PropTypes.object,
 	addTodo: React.PropTypes.func,
 	onClickTodo: React.PropTypes.func
 }
 
-export default TodoList
+export default TodoView

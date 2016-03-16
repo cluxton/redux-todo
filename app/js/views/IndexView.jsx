@@ -3,9 +3,9 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Paper from '../components/Paper'
 import UserDisplay from '../components/UserDisplay'
-import TodoList from '../components/TodoList'
-import throttle from 'lodash/throttle'
+
 import { connect } from 'react-redux'
+import { createUser, getUser } from '../redux/modules/user'
 import { 
 	addTodo,
 	addAsync,
@@ -13,20 +13,26 @@ import {
 	undoComplete, 
 	clearCompleted,
 	loadTodoList,
-	createTodoList,
-	saveTodoList
+	createTodoList
 } from '../redux/modules/todo'
 
-
-class HomeView extends React.Component {
+class IndexView extends React.Component {
 
 	constructor() {
 		super()
 		this.onClickTodo = this.onClickTodo.bind(this)
-		this.saveTodoList = throttle(this.saveTodoList.bind(this), 5000)
 	}
 
 	componentDidMount() {
+		//Load or create a new user
+		if (this.props.user && this.props.user.id !== null) {
+			console.log("Get user")
+			this.props.getUser(this.props.user.id)
+		} else {
+			console.log("Create user")
+			this.props.createUser()
+		}
+
 		//Load or create a new todoList
 		if ('id' in this.props.params) {
 			this.props.loadTodoList(this.props.params.id)
@@ -35,17 +41,6 @@ class HomeView extends React.Component {
 		} else {
 			this.props.createTodoList()
 		}
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (this.props.todos.id != null) {
-			this.saveTodoList()
-		}
-	}
-
-	saveTodoList() {
-		
-		this.props.saveTodoList()
 	}
 
 	onClickTodo(e) {
@@ -63,18 +58,7 @@ class HomeView extends React.Component {
 			<div className="pageContent">
 				<Header/>
 					<Paper>
-						<UserDisplay user={this.props.user}/>
-						{ !this.props.loading ? 
-							<TodoList
-								todos={this.props.todos}
-
-								addTodo={this.props.addTodo}
-								onClickTodo={this.onClickTodo}
-								onClearTodos={this.props.clearCompleted}/>
-						: 
-						<span>Loading</span> }
-						
-
+						Index
 					</Paper>
 				<Footer/>
 			</div>
@@ -84,19 +68,15 @@ class HomeView extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		todos: state.todos,
-		loading: state.todos.loading,
-		user: state.user.user
+		loading: state.user.loading || state.user.saving || state.todos.loading,
+		user: state.user.user,
+		todoListId: state.todos.id
 	}
 }
 
 export default connect((mapStateToProps), {
-	addTodo,
-	addAsync,
-	markComplete,
-	undoComplete,
-	clearCompleted,
+	createUser,
+	getUser,
 	loadTodoList,
-	createTodoList,
-	saveTodoList
-})(HomeView)
+	createTodoList
+})(IndexView)
