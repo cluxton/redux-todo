@@ -2,6 +2,7 @@ import React from 'react'
 import TodoItems from '../components/TodoItems'
 import TodoField from '../components/TodoField'
 import ActionWebsocket from '../util/ActionWebsocket'
+import find from 'lodash/find'
 
 class TodoList extends React.Component {
 	
@@ -18,6 +19,7 @@ class TodoList extends React.Component {
 	}
 
 	render() {
+		let hasCompleted = typeof(find(this.props.todos.todos, function(t) { return t.complete == true })) !== 'undefined';
 		return (
 			<div>
 				<div className="paperHeader">
@@ -37,7 +39,9 @@ class TodoList extends React.Component {
 
 				<div className="paperFooter">
 					<div className="todoListFooter">
+						{ hasCompleted === true ?
 						<button className="clearTodos" onClick={this.props.onClearTodos}>Clear completed</button>
+						: null }
 					</div>
 				</div>
 			</div>
