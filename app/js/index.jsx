@@ -5,6 +5,9 @@ import Actions from './redux/actions'
 import ActionWebsocket from './util/ActionWebsocket'
 import createRouter from './routes'
 
+import fetch from 'whatwg-fetch'
+import Promise from 'es6-promise'
+
 const store = configureStore()
 ActionWebsocket.setStore(store)
 
