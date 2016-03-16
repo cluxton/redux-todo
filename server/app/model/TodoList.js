@@ -11,15 +11,14 @@ const listKey = function(id) {
 
 var TodoList = module.exports = function(object) {
 	if (object !== undefined) {
-		console.log(object)
 		this.id = object.id;
 		this.title = object.title;
+		this.todos = object.todos;
 	} else {
 		this.id = null;
 		this.title = "New Todo List";
+		this.todos = [];
 	}
-
-	this.todos = [];
 	
 	return this;
 };
@@ -37,10 +36,10 @@ TodoList.prototype.save = function() {
 
 TodoList.prototype.update = function(updates) {
 	this.merge(updates);
-
 	return redis.hmsetAsync(this.key(), [
 		"title", this.title,
-		"id", this.id
+		"id", this.id,
+		"todos", JSON.stringify(this.todos)
 	]);
 };
 
@@ -51,6 +50,10 @@ TodoList.prototype.merge = function(updates) {
 
 	if (updates.title !== undefined) {
 		this.title = updates.title;
+	}
+
+	if (updates.todos !== undefined) {
+		this.todos = updates.todos;
 	}
 }
 
@@ -79,22 +82,11 @@ module.exports.get = function(id) {
 
 	return new Promise(function(resolve, reject) {
 
-		redis.multi()
-			.hgetall(listKey(id))
-			.sort(key + ':todos', 'by', 'nosort', 'get' , '*')
-			.execAsync()
-			.then(function(replies) {
-				if (replies[0] == null) {
-					resolve(null);
-					return;
-				}
-
-				let list = replies[0];
-				list.todos = _.map(replies[1], function(val) {
-					return JSON.parse(val);
-				});
-
-				resolve(list);
+		redis.hgetallAsync(listKey(id))
+			.then(function(reply) {
+				let list = reply;
+				list.todos = JSON.parse(list.todos);
+				resolve(new TodoList(list));
 			})
 			.catch(function(error) {
 				reject(error)

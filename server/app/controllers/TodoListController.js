@@ -39,15 +39,21 @@ router.post('/todolist', function(req,res,next) {
 router.put('/todolist/:id', function(req,res,next) {
 	TodoList.get(req.params.id)
 	  	.then(function(todoList) {
-
 	  		if (todoList === null) {
 	  			res.status(404)
 	  			res.json({"message" : "todoList could not be found"});
 	  			return;
 	  		} 
 
-	  		res.status(200)
-	  		res.json(todoList);
+	  		todoList.update(req.body)
+	  			.then(function(reply) {
+	  				res.status(200)
+	  				res.json({"message" : "updated"});
+	  				return;
+	  			})
+	  			.catch(next)
+	  			
+	  		return null;
 	  	})
 	  	.catch(next)
 });
