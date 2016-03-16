@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express'),
-	expressWs = require('express-ws'),
   	router = express.Router(),
   	TodoList = require('../model/TodoList');
 
@@ -52,7 +51,7 @@ router.put('/todolist/:id', function(req,res,next) {
 	  				return;
 	  			})
 	  			.catch(next)
-	  			
+
 	  		return null;
 	  	})
 	  	.catch(next)

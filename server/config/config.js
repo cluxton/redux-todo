@@ -20,7 +20,7 @@ var configurations = {
 	production: {
 		root : path.join(__dirname, "../"),
 		port: process.env.PORT || "3000",
-		hashIDSalt: process.env.HASHID_SALE || "default",
+		hashIDSalt: process.env.HASHID_SALT || "default",
 		redisUrl: redisUrl,
 		webpack: false,
 		livereload: false,

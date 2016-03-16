@@ -64,8 +64,5 @@
     "updeep": "^0.13.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
-  },
-  "devDependencies": {
-    "express-ws": "^1.0.0"
   }
 }
