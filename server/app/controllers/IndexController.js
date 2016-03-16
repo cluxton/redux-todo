@@ -15,4 +15,5 @@ const indexHandler = function (req, res, next) {
 
 router.get('/', indexHandler);
 router.get('/todo*', indexHandler);
+router.get('/login*', indexHandler);
 

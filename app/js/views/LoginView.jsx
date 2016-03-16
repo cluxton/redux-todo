@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Paper from '../components/Paper'
+import LoadingIndicator from '../components/LoadingIndicator'
 
 import { connect } from 'react-redux'
 import { createUser, getUser } from '../redux/modules/user'
@@ -24,10 +25,8 @@ class LoginView extends React.Component {
 	componentDidMount() {
 		//Load or create a new user
 		if (this.props.user && this.props.user.id !== null) {
-			console.log("Get")
 			this.props.getUser(this.props.user.id)
 		} else {
-			console.log("Create")
 			this.props.createUser()
 		}
 	}
@@ -49,7 +48,7 @@ class LoginView extends React.Component {
 			<div className="pageContent">
 				<Header/>
 					<Paper>
-						Loading user
+						<LoadingIndicator/>
 					</Paper>
 				<Footer/>
 			</div>

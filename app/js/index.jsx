@@ -6,6 +6,7 @@ import ActionWebsocket from './util/ActionWebsocket'
 import createRouter from './routes'
 
 const store = configureStore()
+ActionWebsocket.setStore(store)
 
 //Shim for Date.now()
 if (!Date.now) {
@@ -13,7 +14,6 @@ if (!Date.now) {
 }
 
 //Restore any saved state from local storage
-// Disabling local storage for now... causing problems with collaboration
 if ('localStorage' in window) {
 	let savedState = window.localStorage.getItem("appState")
 	if (savedState !== null) {
@@ -24,19 +24,18 @@ if ('localStorage' in window) {
 	}
 }
 
-ActionWebsocket.setStore(store)
-
 ReactDOM.render(createRouter(store), document.getElementById("content"))
 
 //Register the service worker
-if (false && typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
-	navigator.serviceWorker
-		.register('worker.js', { scope: '/' })
-		.then(function(registration) {
-			console.log('ServiceWorker registration successful with scope: ',    registration.scope);
-		})
-		.catch(function(err) {
-			console.log("Service worker registration failed:", err)
-		});
-}
+//Service worker will be reenabled eventually
+// if (false && typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
+// 	navigator.serviceWorker
+// 		.register('worker.js', { scope: '/' })
+// 		.then(function(registration) {
+// 			console.log('ServiceWorker registration successful with scope: ',    registration.scope);
+// 		})
+// 		.catch(function(err) {
+// 			console.log("Service worker registration failed:", err)
+// 		});
+// }
 

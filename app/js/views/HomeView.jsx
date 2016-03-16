@@ -17,23 +17,21 @@ import {
 	saveTodoList
 } from '../redux/modules/todo'
 
+const SAVE_INTERVAL = 3000;
+
 
 class HomeView extends React.Component {
 
 	constructor() {
 		super()
 		this.onClickTodo = this.onClickTodo.bind(this)
-		this.saveTodoList = throttle(this.saveTodoList.bind(this), 5000)
+		this.saveTodoList = throttle(this.saveTodoList.bind(this), SAVE_INTERVAL)
 	}
 
 	componentDidMount() {
 		//Load or create a new todoList
 		if ('id' in this.props.params) {
 			this.props.loadTodoList(this.props.params.id)
-		} else if (this.props.todoListId != null) {
-			this.props.loadTodoList(this.props.todoListId)
-		} else {
-			this.props.createTodoList()
 		}
 	}
 
@@ -64,7 +62,7 @@ class HomeView extends React.Component {
 				<Header/>
 					<Paper>
 						<UserDisplay user={this.props.user}/>
-						{ !this.props.loading ? 
+						{ this.props.todos.id != null ? 
 							<TodoList
 								todos={this.props.todos}
 

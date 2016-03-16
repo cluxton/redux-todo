@@ -28,9 +28,9 @@ const createRouter = (store) => {
 	return (
 		<Router history={browserHistory}>
 			<Route path="/" component={App}>
-				<IndexRoute component={IndexView}/>
+				<IndexRoute component={IndexView} onEnter={requireAuth}/>
 				<Route path="/login" component={LoginView}/>
-				<Route path="/todo/:id" component={HomeView} onEnter={requireAuth}/>
+				<Route path="/todos/:id" component={HomeView} onEnter={requireAuth}/>
 			</Route>
 		</Router>
 	)

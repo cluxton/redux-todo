@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Paper from '../components/Paper'
 import UserDisplay from '../components/UserDisplay'
+import LoadingIndicator from '../components/LoadingIndicator'
 
 import { connect } from 'react-redux'
 import { createUser, getUser } from '../redux/modules/user'
@@ -20,36 +21,18 @@ class IndexView extends React.Component {
 
 	constructor() {
 		super()
-		this.onClickTodo = this.onClickTodo.bind(this)
 	}
 
 	componentDidMount() {
-		//Load or create a new user
-		if (this.props.user && this.props.user.id !== null) {
-			console.log("Get user")
-			this.props.getUser(this.props.user.id)
-		} else {
-			console.log("Create user")
-			this.props.createUser()
-		}
-
-		//Load or create a new todoList
-		if ('id' in this.props.params) {
-			this.props.loadTodoList(this.props.params.id)
-		} else if (this.props.todoListId != null) {
-			this.props.loadTodoList(this.props.todoListId)
-		} else {
-			this.props.createTodoList()
-		}
+		this.props.createTodoList()
 	}
 
-	onClickTodo(e) {
-		let data = e.currentTarget.dataset;
-
-		if (!JSON.parse(data.isComplete)) {
-			this.props.markComplete(data.todoId)
-		} else {
-			this.props.undoComplete(data.todoId)
+	componentWillReceiveProps(nextProps) {
+		const location = this.props.location
+		console.log(nextProps);
+		if (nextProps.todoListId !== null) {
+			console.log("ROUTE")
+		    this.context.router.replace(`/todos/${nextProps.todoListId}`)
 		}
 	}
 
@@ -58,12 +41,17 @@ class IndexView extends React.Component {
 			<div className="pageContent">
 				<Header/>
 					<Paper>
-						Index
+						<UserDisplay user={this.props.user}/>
+						<LoadingIndicator/>
 					</Paper>
 				<Footer/>
 			</div>
 		);
 	}
+}
+
+IndexView.contextTypes = {
+	router: React.PropTypes.object
 }
 
 const mapStateToProps = (state) => {
@@ -75,8 +63,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect((mapStateToProps), {
-	createUser,
-	getUser,
 	loadTodoList,
 	createTodoList
 })(IndexView)
