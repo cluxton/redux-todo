@@ -34,7 +34,7 @@ User.prototype.save = function() {
 User.prototype.update = function(updates) {
 	this.merge(updates);
 
-	return redis.hmset(this.key(), [
+	return redis.hmsetAsync(this.key(), [
 		"name", this.name,
 		"id", this.id
 	]);
