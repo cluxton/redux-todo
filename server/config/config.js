@@ -12,6 +12,7 @@ var configurations = {
 		webpack: process.env.WEBPACK_PORT !== undefined,
 		livereload: process.env.LIVERELOAD_PORT !== undefined,
 		stacktrace : true,
+		analytics: false,
 		locals : {
 			'LIVERELOAD_ENABLED': true
 		}
@@ -25,6 +26,7 @@ var configurations = {
 		webpack: false,
 		livereload: false,
 		stacktrace : false,
+		analytics: true,
 		locals : { }
 	}
 }

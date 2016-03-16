@@ -15,6 +15,7 @@ module.exports = function(app, config) {
   app.locals.ENV = config.env;
   app.locals.ENV_DEVELOPMENT = config.env == 'development';
   app.locals.LIVERELOAD_ENABLED = config.livereload === true;
+  app.locals.ANALYTICS_ENABLED = config.analytics === true;
   app.locals.LIVERELOAD_PORT = process.env.LIVERELOAD_PORT; 
 
   //express-handlebars - setup the view templating engine
